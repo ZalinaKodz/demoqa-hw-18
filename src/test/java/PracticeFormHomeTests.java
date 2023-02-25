@@ -24,23 +24,35 @@ public class PracticeFormHomeTests {
         $("#firstName").setValue("Ivan");
         $("#lastName").setValue("Ivanov");
         $("#userEmail").sendKeys("Ivanov77@example.com");
-        $("#gender-radio-1").sendKeys(" ");
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").sendKeys("1234567890");
         $("#dateOfBirthInput").click();
         $(by("class", "react-datepicker__year-select")).$(byText("1987")).click();
         $(by("class", "react-datepicker__month-select")).$(byText("March")).click();
         $(by("class", "react-datepicker__month-container")).$(byText("18")).click();
         $("#subjectsInput").setValue("Maths").pressEnter();
-        $("#hobbies-checkbox-1").sendKeys(" ");
+        $("#hobbiesWrapper").$(byText("Reading")).click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/photo_2023-02-24_16-16-09.jpg"));
         $("#currentAddress").sendKeys("address address");
         $("#state").scrollIntoView(true);
         $("#state").click();
-        $("#react-select-3-option-1").click();
+        $("#state").$(byText("NCR")).click();
         $("#city").click();
-        $("#react-select-4-option-0").click();
+        $("#city").$(byText("Delhi")).click();
         $("#submit").sendKeys(Keys.ENTER);
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+
+        $(".modal-body").shouldHave(text("Ivan Ivanov"));
+        $(".modal-body").shouldHave(text("Ivanov77@example.com"));
+        $(".modal-body").shouldHave(text("Male"));
+        $(".modal-body").shouldHave(text("1234567890"));
+        $(".modal-body").shouldHave(text("18 March"));
+        $(".modal-body").shouldHave(text("Maths"));
+        $(".modal-body").shouldHave(text("Reading"));
+        $(".modal-body").shouldHave(text("photo_2023-02-24_16-16-09.jpg"));
+        $(".modal-body").shouldHave(text("address address"));
+        $(".modal-body").shouldHave(text("NCR Delhi"));
+        $("#closeLargeModal").click();
     }
 }
