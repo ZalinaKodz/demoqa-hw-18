@@ -1,20 +1,15 @@
 package pages;
 
-
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
-import pages.components.RegistrationFinalModal;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationPage {
-    private final String TITLE_TEXT = "Student Registration Form";
-    private CalendarComponent calendarComponent = new CalendarComponent();
-    private RegistrationFinalModal registrationFinalModal = new RegistrationFinalModal();
+    private final CalendarComponent calendarComponent = new CalendarComponent();
     private final SelenideElement
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
@@ -28,12 +23,13 @@ public class RegistrationPage {
             currentAddress = $("#currentAddress"),
             userState = $("#state"),
             userCity = $("#city"),
-            submitButton = $("#submit"),
-            close = $("#closeLargeModal");
-
+            submitButton = $("#submit");
     public RegistrationPage openPage() {
         open("/automation-practice-form");
-        $(".practice-form-wrapper").shouldHave(text(TITLE_TEXT));
+
+        return this;
+    }
+    public RegistrationPage removeBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
@@ -90,7 +86,7 @@ public class RegistrationPage {
 
         return this;
     }
-    public RegistrationPage scrollPage(Boolean value) {
+    public RegistrationPage scrollPageIntoView(Boolean value) {
         userState.scrollIntoView(value);
 
         return this;
@@ -112,19 +108,5 @@ public class RegistrationPage {
 
         return this;
     }
-    public RegistrationPage verificationModal() {
-        registrationFinalModal.verificationDetails();
 
-        return this;
-    }
-    public RegistrationPage verificationResult(String key, String value) {
-        registrationFinalModal.verificationResult(key, value);
-
-        return this;
-    }
-    public RegistrationPage closeModal() {
-        close.click();
-
-        return this;
-    }
 }
