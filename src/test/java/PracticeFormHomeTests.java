@@ -1,6 +1,9 @@
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import pages.components.RegistrationFinalModal;
+
+import static utils.RandomUtils.getRandomItemFromArray;
 
 
 public class PracticeFormHomeTests extends TestBase {
@@ -8,49 +11,51 @@ public class PracticeFormHomeTests extends TestBase {
     public RegistrationFinalModal registrationFinalModal = new RegistrationFinalModal();
     @Test
     void fillFormTest() {
-        String firstname = "Ivan",
-                lastname = "Ivanov",
-                email = "Ivanov77@example.com",
-                gender = "Male",
-                phone = "1234567890",
-                day = "18",
-                month = "March",
-                year = "1987",
-                subject = "Maths",
-                picture = "src/test/resources/photo_2023-02-24_16-16-09.jpg",
-                hobby = "Reading",
-                address = "address address",
-                state = "NCR",
-                city = "Delhi";
+        Faker faker = new Faker();
+
+        String firstName = faker.name().firstName(),
+                lastName = faker.name().lastName(),
+                userEmail = faker.internet().emailAddress(),
+                userGender = faker.demographic().sex(),
+                userMobilePhone = 8 + faker.phoneNumber().subscriberNumber(9),
+                dayOfBirth = String.valueOf(faker.number().numberBetween(1,28)),
+                monthOfBirth = getRandomItemFromArray(TestData.months),
+                yearOfBirth = String.valueOf(faker.number().numberBetween(1920,2010)),
+                userSubject = getRandomItemFromArray(TestData.subjects),
+                userPicture = TestData.userFilePath,
+                userHobby = faker.options().option(TestData.hobby),
+                userAddress = faker.address().fullAddress(),
+                userState = "NCR",
+                userCity = getRandomItemFromArray(TestData.cities);
 
         registrationPage.openPage()
                 .removeBanner()
-                .setFirstName(firstname)
-                .setLastName(lastname)
-                .setUserEmail(email)
-                .setGender(gender)
-                .setPhoneNumber(phone)
-                .setBirthDay(day, month, year)
-                .setSubject(subject)
-                .chooseHobby(hobby)
-                .uploadPicture(picture)
-                .setAddress(address)
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(userEmail)
+                .setGender(userGender)
+                .setPhoneNumber(userMobilePhone)
+                .setBirthDay(dayOfBirth, monthOfBirth, yearOfBirth)
+                .setSubject(userSubject)
+                .chooseHobby(userHobby)
+                .uploadPicture(userPicture)
+                .setAddress(userAddress)
                 .scrollPageIntoView(true)
-                .selectState(state)
-                .selectCity(city)
+                .selectState(userState)
+                .selectCity(userCity)
                 .submit();
 
         registrationFinalModal.verifyModalDetails()
-                .verifyModalResult("Student Name", firstname + ' ' + lastname)
-                .verifyModalResult("Student Email", email)
-                .verifyModalResult("Gender", gender)
-                .verifyModalResult("Mobile", phone)
-                .verifyModalResult("Date of Birth", day + " " + month + "," + year)
-                .verifyModalResult("Subjects", subject)
-                .verifyModalResult("Hobbies", hobby)
-                .verifyModalResult("Picture", "photo_2023-02-24_16-16-09.jpg")
-                .verifyModalResult("Address", address)
-                .verifyModalResult("State and City", state + " " + city);
+                .verifyModalResult("Student Name", firstName + ' ' + lastName)
+                .verifyModalResult("Student Email", userEmail)
+                .verifyModalResult("Gender", userGender)
+                .verifyModalResult("Mobile", userMobilePhone)
+                .verifyModalResult("Date of Birth", dayOfBirth + " " + monthOfBirth + "," + yearOfBirth)
+                .verifyModalResult("Subjects", userSubject)
+                .verifyModalResult("Hobbies", userHobby)
+                .verifyModalResult("Picture", TestData.userFileName)
+                .verifyModalResult("Address", userAddress)
+                .verifyModalResult("State and City", userState + " " + userCity);
 
     }
 }
