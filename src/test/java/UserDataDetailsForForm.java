@@ -28,4 +28,17 @@ public class UserDataDetailsForForm {
             yearOfBirth = (new SimpleDateFormat("y", Locale.ENGLISH)).format(dateOfBirth);
 
 
+    static String firstName = faker.name().firstName(),
+            lastName = faker.name().lastName(),
+            userEmail = faker.internet().emailAddress(),
+            userGender = faker.demographic().sex(),
+            userMobilePhone = 8 + faker.phoneNumber().subscriberNumber(9),
+            userSubject = faker.options().option(UserDataDetailsForForm.subjects),
+            userPicture = UserDataDetailsForForm.userFilePath,
+            userHobby = faker.options().option(UserDataDetailsForForm.hobby),
+            userAddress = faker.address().fullAddress(),
+            userState = faker.options().option(UserDataDetailsForForm.statesAndCities.keySet().toArray()).toString(),
+            userCity = faker.options().option(UserDataDetailsForForm.statesAndCities.get(userState));
+
+
 }
