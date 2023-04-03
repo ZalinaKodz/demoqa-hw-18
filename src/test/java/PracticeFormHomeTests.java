@@ -1,9 +1,12 @@
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import pages.components.RegistrationFinalModal;
 
+import static io.qameta.allure.Allure.step;
 
+@Tag("demoqa")
 public class PracticeFormHomeTests extends TestBase {
  RegistrationPage registrationPage = new RegistrationPage();
  RegistrationFinalModal registrationFinalModal = new RegistrationFinalModal();
@@ -11,7 +14,7 @@ UserDataDetailsForForm userDataDetailsForForm = new UserDataDetailsForForm();
 
     @Test
     void fillFormTest() {
-
+        step("Fill form", () -> {
         registrationPage.openPage()
                 .removeBanner()
                 .setFirstName(userDataDetailsForForm.firstName)
@@ -28,7 +31,9 @@ UserDataDetailsForForm userDataDetailsForForm = new UserDataDetailsForForm();
                 .selectState(userDataDetailsForForm.userState)
                 .selectCity(userDataDetailsForForm.userCity)
                 .submit();
+        });
 
+        step("Verify results", () -> {
         registrationFinalModal.verifyModalDetails()
                 .verifyModalResult("Student Name", userDataDetailsForForm.firstName + ' ' + userDataDetailsForForm.lastName)
                 .verifyModalResult("Student Email", userDataDetailsForForm.userEmail)
@@ -40,6 +45,6 @@ UserDataDetailsForForm userDataDetailsForForm = new UserDataDetailsForForm();
                 .verifyModalResult("Picture", "photo_2023-02-24_16-16-09.jpg")
                 .verifyModalResult("Address", userDataDetailsForForm.userAddress)
                 .verifyModalResult("State and City", userDataDetailsForForm.userState + " " + userDataDetailsForForm.userCity);
-
+        });
     }
 }
