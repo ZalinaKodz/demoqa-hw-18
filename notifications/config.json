@@ -1,0 +1,22 @@
+{
+  "base": {
+    "logo": "",
+    "project": "QaGuru project",
+    "environment": "qa.guru",
+    "comment": "any comment here, @ZalinaKodz",
+    "reportLink": "https://jenkins.autotests.cloud",
+    "language": "ru",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "6067650461:AAEPRULG0pxRHSoJTer56MIouBttU3hQhM8",
+    "chat": "-1001521018110",
+    "replyTo": ""
+  },
+  "slack": {
+    "token": "xoxb-1687076169986-4740795293235-tKVUiaaj6EBeSJuZfqcrXXal",
+    "chat": "#qa_guru_17",
+    "replyTo": ""
+  }
+}
